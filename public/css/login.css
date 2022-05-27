@@ -15,6 +15,7 @@ body {
     border: 1px solid #dedede;
     background-color: #fff;
     text-align: center;
+    border-radius: 2px;
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
     -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
     -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
