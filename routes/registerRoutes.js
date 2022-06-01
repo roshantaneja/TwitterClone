@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const router = express.Router();
 const bodyParser = require('body-parser')
+const User = require("../schemas/UserSchema")
 
 app.set("view engine", "pug");
 app.set("veiws", "veiws");
@@ -12,7 +13,7 @@ router.get("/", (req, res, next) => {
     res.status(200).render("register");
 });
 
-router.post("/", (req, res, next) => {
+router.post("/", async (req, res, next) => {
     var firstName = req.body.firstName.trim();
     var lastName = req.body.lastName.trim();
     var username = req.body.username.trim();
@@ -22,9 +23,16 @@ router.post("/", (req, res, next) => {
     var payload = req.body;
 
     if(firstName && lastName && username && email && password) {
-        console.log(req.body);
-        
-    } else {
+        var user = await User.findOne({
+            $or: [
+                { username: username },
+                { email: email }
+            ]
+        })
+        console.log(user)
+        console.log("heelo");
+    } 
+    else {
         payload.errorMessage = "Make sure each field has a valid value!"
         res.status(200).render("register", payload);
     }
