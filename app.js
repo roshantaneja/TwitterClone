@@ -1,9 +1,10 @@
 const express = require('express');
 const app = express();
 const port = 3003;
-const middleware = require("./middleware")
-const path = require('path')
-const bodyParser = require('body-parser')
+const middleware = require("./middleware");
+const path = require('path');
+const bodyParser = require('body-parser');
+const mongoose = require("./database");
 
 const server = app.listen(port, () => console.log("server listening on port: " + port));
 

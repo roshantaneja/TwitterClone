@@ -22,6 +22,7 @@ router.post("/", (req, res, next) => {
     var payload = req.body;
 
     if(firstName && lastName && username && email && password) {
+        console.log(req.body);
         
     } else {
         payload.errorMessage = "Make sure each field has a valid value!"
