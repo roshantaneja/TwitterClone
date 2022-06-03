@@ -21,6 +21,7 @@ router.post("/", async (req, res, next) => {
     var password = req.body.password;
 
     var payload = req.body;
+    console.log(req.body);
 
     if(firstName && lastName && username && email && password) {
         var user = await User.findOne({
@@ -29,8 +30,19 @@ router.post("/", async (req, res, next) => {
                 { email: email }
             ]
         })
-        console.log(user)
-        console.log("heelo");
+        .catch((err) => {
+            console.log(err);
+            payload.errorMessage = "Something went wrong.";
+            res.status(200).render("register", payload);
+        });
+
+        if (user == null) {
+            //no user found
+            console.log("no user found! continuing with registration for " + username + "!")
+        } else {
+            //found user matching usernmae or email
+
+        }
     } 
     else {
         payload.errorMessage = "Make sure each field has a valid value!"
