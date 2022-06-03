@@ -2,7 +2,8 @@ const express = require('express');
 const app = express();
 const router = express.Router();
 const bodyParser = require('body-parser')
-const User = require("../schemas/UserSchema")
+const User = require("../schemas/UserSchema");
+const { compile } = require('pug');
 
 app.set("view engine", "pug");
 app.set("veiws", "veiws");
@@ -21,7 +22,7 @@ router.post("/", async (req, res, next) => {
     var password = req.body.password;
 
     var payload = req.body;
-    console.log(req.body);
+    //console.log(req.body);
 
     if(firstName && lastName && username && email && password) {
         var user = await User.findOne({
@@ -39,11 +40,20 @@ router.post("/", async (req, res, next) => {
         if (user == null) {
             //no user found
             console.log("no user found! continuing with registration for " + username + "!")
+            //insert user
+            var data = req.body;
+            //data.password = hashed pass
+            User.create(data)
+            .then((user) => {
+                console.log(user);
+            })
         } else {
             //found user matching usernmae or email
             if (email == user.email) {
-                payload.errorMessage = "Wmail already in use.";
+                console.log("Email already in use.")
+                payload.errorMessage = "Email already in use.";
             } else {
+                console.log("Username already in use.")
                 payload.errorMessage = "Username already in use.";
             }
             res.status(200).render("register", payload);
