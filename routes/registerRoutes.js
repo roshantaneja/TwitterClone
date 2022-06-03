@@ -41,7 +41,12 @@ router.post("/", async (req, res, next) => {
             console.log("no user found! continuing with registration for " + username + "!")
         } else {
             //found user matching usernmae or email
-
+            if (email == user.email) {
+                payload.errorMessage = "Wmail already in use.";
+            } else {
+                payload.errorMessage = "Username already in use.";
+            }
+            res.status(200).render("register", payload);
         }
     } 
     else {
