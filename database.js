@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+var config = require("./config.json");
 
 class Database {
 
@@ -7,13 +8,13 @@ class Database {
     }
 
     connect() {
-        mongoose.connect("mongodb+srv://admin:adminPassword@twitterclonecluster.ykiaoqt.mongodb.net/TwitterCloneDB?retryWrites=true&w=majority")
-        .then(() => {
-            console.log("database connection successful!");
-        })
-        .catch((err) => {
-            console.log("database connection error" + err);
-        })
+        mongoose.connect("mongodb+srv://" + config.mongodb.login + ":" + config.mongodb.password + "@twitterclonecluster.ykiaoqt.mongodb.net/TwitterCloneDB?retryWrites=true&w=majority")
+            .then(() => {
+                console.log("database connection successful!");
+            })
+            .catch((err) => {
+                console.log("database connection error" + err);
+            })
     }
 }
 
